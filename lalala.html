@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<button id="but">click</button>
+
+<script>
+    function getAD() {
+        return "localhost:8080/receiveSecret";
+    }
+    $("#but").click(
+            function () {
+                var xhr = new XMLHttpRequest();
+                var userSecret = "http:baidu.com";
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState != 4)
+                        return;
+                    var obj = JSON.parse(xhr.responseText);
+                    if (obj.url) {
+                        alert(obj.url);
+                    } else {
+                        alert("failed");
+                    }
+                };
+                xhr.open("GET", getAD() + "?secretUrl=" + userSecret, true);
+                xhr.send(null);
+            }
+    );
+
+</script>
+</body>
+</html>
