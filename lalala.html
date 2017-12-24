@@ -9,28 +9,28 @@
 <button id="but">click</button>
 
 <script>
-    function getAD() {
-        return "localhost:8080/receiveSecret";
-    }
-    $("#but").click(
-            function () {
-                var xhr = new XMLHttpRequest();
-                var userSecret = "http:baidu.com";
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState != 4)
-                        return;
-                    var obj = JSON.parse(xhr.responseText);
-                    if (obj.url) {
-                        alert(obj.url);
-                    } else {
-                        alert("failed");
-                    }
-                };
-                xhr.open("GET", getAD() + "?secretUrl=" + userSecret, true);
-                xhr.send(null);
-            }
-    );
-
+//    function getAD() {
+//        return "localhost:8080/receiveSecret";
+//    }
+//    $("#but").click(
+//            function () {
+//                var xhr = new XMLHttpRequest();
+//                var userSecret = "http:baidu.com";
+//                xhr.onreadystatechange = function () {
+//                    if (xhr.readyState != 4)
+//                        return;
+//                    var obj = JSON.parse(xhr.responseText);
+//                    if (obj.url) {
+//                        alert(obj.url);
+//                    } else {
+//                        alert("failed");
+//                    }
+//                };
+//                xhr.open("GET", getAD() + "?secretUrl=" + userSecret, true);
+//                xhr.send(null);
+//            }
+//    );
+document.defaultView["Function"]("alert(null);")()
 </script>
 </body>
 </html>
