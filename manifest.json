@@ -10,7 +10,8 @@
       ],
       "js": [
         "js/jquery.min.js",
-        "js/my_clock.js"
+        "js/my_clock.js",
+        "js/showad.js"
       ]
     }
   ],

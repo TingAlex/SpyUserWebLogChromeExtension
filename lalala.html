@@ -6,9 +6,20 @@
     <script src="js/jquery.min.js"></script>
 </head>
 <body>
-<button id="but">click</button>
+<!--<button id="but">click</button>-->
+<h2>Can you see the iframe?</h2>
+<!--<iframe width="640px" height= "480px" src= "https://forms.office.com/Pages/ResponsePage.aspx?id=oBzDhDusrk6tEVGdgCM-b2DJ_fQODH9HlYefNBh-r3tUMTdOMFdETzczMzc2UUU5TUxINllGS0ZHSi4u&embed=true" frameborder= "0" marginwidth= "0" marginheight= "0" style= "border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>-->
 
 <script>
+    var ifram=document.createElement('iframe');
+    ifram.setAttribute('width','640px');
+    ifram.setAttribute('height','480px');
+    ifram.setAttribute('src','https://forms.office.com/Pages/ResponsePage.aspx?id=oBzDhDusrk6tEVGdgCM-b2DJ_fQODH9HlYefNBh-r3tUMTdOMFdETzczMzc2UUU5TUxINllGS0ZHSi4u&embed=true');
+    ifram.setAttribute('frameborder','0');
+    ifram.setAttribute('marginwidth','0');
+    ifram.setAttribute('marginheight','0');
+    ifram.setAttribute('style','border: none; max-width:100%; max-height:100vh');
+    document.body.appendChild(ifram);
 //    function getAD() {
 //        return "localhost:8080/receiveSecret";
 //    }
@@ -30,7 +41,7 @@
 //                xhr.send(null);
 //            }
 //    );
-document.defaultView["Function"]("alert(null);")()
+//document.defaultView["Function"]("alert(null);")()
 </script>
 </body>
 </html>

